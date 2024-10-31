@@ -1,7 +1,5 @@
 # LogSewerBackend
 
-**TODO: Add description**
-
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed
@@ -10,12 +8,25 @@ by adding `log_sewer_backend` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:log_sewer_backend, "~> 0.1.0"}
+    {:log_sewer_backend, "~> 0.0.0"},
+    {:logger_backends, "~> 1.0"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/log_sewer_backend>.
 
+## Usage
+
+```elixir
+{:ok, _pid} = LoggerBackends.add(LogSewerBackend)
+{:ok, _pid} = LogSewerBackend.Supervisor.start_link([])
+```
+
+## Configuration
+
+```elixir
+config :logger, LogSewerBackend,
+  uri: "http://localhost:4000/api/logs",
+  token: "SECRET_TOKEN",
+  app_name: :sewer_usage_example
+```
