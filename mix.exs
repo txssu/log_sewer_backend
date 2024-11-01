@@ -5,7 +5,7 @@ defmodule LogSewerBackend.MixProject do
     [
       app: :log_sewer_backend,
       description: "Backend for use with LogSewer",
-      version: "0.0.1",
+      version: "0.0.2",
       elixir: "~> 1.16",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -42,6 +42,7 @@ defmodule LogSewerBackend.MixProject do
     [
       {:finch, "~> 0.19"},
       {:jason, "~> 1.4"},
+      {:castore, "~> 1.0"},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false},
       # Code quality
       {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
