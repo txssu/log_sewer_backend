@@ -4,12 +4,13 @@ defmodule LogSewerBackend do
 
   alias LogSewerBackend.Client
 
-  defstruct uri: nil, token: nil, app_name: nil
+  defstruct ~w[uri token app_name enabled?]a
 
   @impl :gen_event
   def init(_opts) do
     options = Application.get_env(:logger, __MODULE__)
 
+    LogSewerBackend.Supervisor.start_link([])
     {:ok, configure(options)}
   end
 
@@ -22,13 +23,16 @@ defmodule LogSewerBackend do
     %__MODULE__{
       uri: fetch_option!(options, :uri),
       token: fetch_option!(options, :token),
-      app_name: fetch_option!(options, :app_name)
+      app_name: fetch_option!(options, :app_name),
+      enabled?: Keyword.get(options, :enabled?, true)
     }
   end
 
   @impl :gen_event
-  def handle_event({:error, _group_leader, {Logger, message, _datetime, _metadata}}, options) do
+  def handle_event({:error, _group_leader, {Logger, message, _datetime, _metadata}}, %{enabled?: true} = options) do
     Client.send_log(IO.iodata_to_binary(message), options)
+
+    dbg("sended")
 
     {:ok, options}
   end

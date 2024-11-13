@@ -2,8 +2,8 @@
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `log_sewer_backend` to your list of dependencies in `mix.exs`:
+The package can be installed by adding `log_sewer_backend` to your list of 
+dependencies in `mix.exs`:
 
 ```elixir
 def deps do
@@ -19,7 +19,6 @@ end
 
 ```elixir
 {:ok, _pid} = LoggerBackends.add(LogSewerBackend)
-{:ok, _pid} = LogSewerBackend.Supervisor.start_link([])
 ```
 
 ## Configuration
